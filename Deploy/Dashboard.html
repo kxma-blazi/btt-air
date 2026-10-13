@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <base target="_top" />
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f6f9;
+        --card: #fff;
+        --tx: #1c2430;
+        --mu: #6b7686;
+        --bd: #e3e8ef;
+        --soft: #eef3fc;
+        --ok: #1f9d57;
+        --warn: #e8a317;
+        --bad: #d64545;
+        --org: #e9772b;
+        --blue: #2f6fdb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #10151c;
+          --card: #18202b;
+          --tx: #e6ebf2;
+          --mu: #98a3b3;
+          --bd: #2a3442;
+          --soft: #1d2a40;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: 'Noto Sans Thai', system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--tx);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 16px 16px 100px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font-size: 20px;
+        margin: 0;
+      }
+      h2 {
+        font-size: 15px;
+        margin: 0 0 10px;
+      }
+      .mu {
+        color: var(--mu);
+        font-size: 13px;
+      }
+      :focus-visible {
+        outline: 2px solid var(--blue);
+        outline-offset: 2px;
+      }
+
+      /* ปุ่ม / ฟอร์ม */
+      button,
+      .btn {
+        font-family: inherit;
+        cursor: pointer;
+        border: 1px solid var(--bd);
+        background: var(--card);
+        color: var(--tx);
+        border-radius: 10px;
+        padding: 8px 14px;
+        min-height: 40px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-decoration: none;
+      }
+      .btn.pri {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+        font-weight: 600;
+      }
+      .btn.dng {
+        color: var(--bad);
+        border-color: var(--bad);
+      }
+      .btn[disabled] {
+        opacity: 0.55;
+        cursor: default;
+      }
+      .ico {
+        min-height: 40px;
+        min-width: 40px;
+        padding: 0;
+        font-size: 16px;
+      }
+      .chip {
+        min-height: 34px;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+      }
+      .chip.on {
+        background: var(--tx);
+        color: var(--bg);
+        border-color: var(--tx);
+      }
+      input,
+      textarea,
+      select {
+        font-family: inherit;
+        font-size: 16px;
+        background: var(--card);
+        color: var(--tx);
+        border: 1px solid var(--bd);
+        border-radius: 10px;
+        padding: 9px 12px;
+        min-height: 42px;
+      }
+      input.s {
+        flex: 1;
+        min-width: 150px;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+      label input:not([type='checkbox']),
+      label textarea,
+      label select {
+        display: block;
+        width: 100%;
+        margin-top: 4px;
+        font-weight: 400;
+      }
+      label.chk {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 400;
+        font-size: 14px;
+      }
+      label.chk input {
+        width: 20px;
+        height: 20px;
+        min-height: 0;
+      }
+      .err {
+        color: var(--bad);
+        font-size: 13px;
+        min-height: 20px;
+        margin-bottom: 6px;
+      }
+
+      /* โครง */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 14px;
+        padding: 14px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      @media (max-width: 720px) {
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      .kpis {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .kpi .n {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .kpi .l {
+        color: var(--mu);
+        font-size: 12px;
+      }
+      .kpi .sub {
+        font-size: 12px;
+        color: var(--mu);
+      }
+      .bar2 {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        align-items: center;
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+      .empty {
+        text-align: center;
+        padding: 36px 16px;
+        color: var(--mu);
+      }
+      .empty .big {
+        font-size: 40px;
+      }
+      .warnbox {
+        background: #fff4e5;
+        color: #7a4b00;
+        border: 1px solid #f3c77a;
+        border-radius: 12px;
+        padding: 10px 14px;
+        margin-bottom: 14px;
+        font-size: 13px;
+      }
+      .errbox {
+        background: #fdecec;
+        color: #8a1f1f;
+        border: 1px solid #f1b4b4;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 14px;
+      }
+      .view {
+        display: none;
+      }
+      .view.on {
+        display: block;
+      }
+
+      /* แท็บ: เดสก์ท็อปอยู่บน / มือถืออยู่ล่าง */
+      nav.tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 14px;
+        background: var(--card);
+        border: 1px solid var(--bd);
+        border-radius: 14px;
+        padding: 4px;
+      }
+      nav.tabs button {
+        flex: 1;
+        border: 0;
+        background: transparent;
+        font-weight: 600;
+        color: var(--mu);
+        gap: 6px;
+        border-radius: 10px;
+      }
+      nav.tabs button.on {
+        background: var(--blue);
+        color: #fff;
+      }
+      @media (max-width: 720px) {
+        nav.tabs {
+          position: fixed;
+          left: 8px;
+          right: 8px;
+          bottom: 8px;
+          margin: 0;
+          z-index: 20;
+          box-shadow: 0 4px 22px rgba(0, 0, 0, 0.22);
+          padding: 4px;
+        }
+        nav.tabs button {
+          flex-direction: column;
+          gap: 0;
+          font-size: 12px;
+          min-height: 52px;
+        }
+        nav.tabs .ic {
+          font-size: 19px;
+          line-height: 1.2;
+        }
+      }
+
+      /* ภาพรวม */
+      .bar {
+        display: flex;
+        height: 14px;
+        border-radius: 7px;
+        overflow: hidden;
+        background: var(--bd);
+        margin-bottom: 10px;
+      }
+      .legend span {
+        display: inline-block;
+        margin: 0 12px 4px 0;
+        font-size: 13px;
+      }
+      .dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        margin-right: 5px;
+      }
+      .mbars {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        height: 120px;
+      }
+      .mbars div.c {
+        flex: 1;
+        text-align: center;
+        font-size: 11px;
+        color: var(--mu);
+      }
+      .mbars .b {
+        background: var(--blue);
+        border-radius: 4px 4px 0 0;
+        min-height: 2px;
+        margin-bottom: 4px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 6px;
+        border-bottom: 1px solid var(--bd);
+        white-space: nowrap;
+      }
+      th {
+        color: var(--mu);
+        font-weight: 600;
+        font-size: 12px;
+      }
+      td.w {
+        white-space: normal;
+        min-width: 110px;
+      }
+      td.r,
+      th.r {
+        text-align: right;
+      }
+      img.th {
+        width: 44px;
+        height: 44px;
+        object-fit: cover;
+        border-radius: 8px;
+        background: var(--bd);
+        cursor: pointer;
+      }
+      .pill {
+        display: inline-block;
+        padding: 2px 9px;
+        border-radius: 20px;
+        font-size: 12px;
+        color: #fff;
+      }
+      .rec {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--bd);
+        font-size: 13px;
+      }
+      .rec:last-child {
+        border: 0;
+      }
+      #q {
+        width: 100%;
+        resize: vertical;
+      }
+      #ans {
+        white-space: pre-wrap;
+        margin-top: 10px;
+        font-size: 14px;
+      }
+      .quick {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        background: var(--soft);
+        border-color: transparent;
+        margin-bottom: 14px;
+      }
+      .quick .t {
+        flex: 1;
+        min-width: 180px;
+      }
+
+      /* ช่าง */
+      .tc {
+        margin-bottom: 10px;
+      }
+      .tc-top {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      .av {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+      }
+      .tc-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .tc-name {
+        font-weight: 700;
+        font-size: 16px;
+        word-break: break-word;
+      }
+      .meta {
+        color: var(--mu);
+        font-size: 12px;
+        margin-top: 2px;
+      }
+      .tc-act {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .tc-act .btn {
+        flex: 1;
+        min-width: 120px;
+      }
+      .tc-hist {
+        margin-top: 10px;
+        padding-top: 6px;
+        border-top: 1px dashed var(--bd);
+      }
+      .note {
+        font-size: 13px;
+        margin-top: 6px;
+      }
+
+      /* ค่าไฟ */
+      .chart {
+        display: flex;
+        gap: 4px;
+        align-items: flex-end;
+      }
+      .cb {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        background: none;
+        padding: 0;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 2px;
+      }
+      .cb .cv {
+        font-size: 10px;
+        color: var(--mu);
+        height: 14px;
+        white-space: nowrap;
+      }
+      .cb .cbar {
+        width: 78%;
+        max-width: 34px;
+        background: var(--blue);
+        border-radius: 5px 5px 0 0;
+        min-height: 3px;
+      }
+      .cb .cbar.pk {
+        background: var(--org);
+      }
+      .cb .cbar.nil {
+        background: transparent;
+        border: 1px dashed var(--bd);
+        border-bottom: 0;
+      }
+      .cb .cl {
+        font-size: 10px;
+        color: var(--mu);
+      }
+      .cb.sel .cl {
+        color: var(--tx);
+        font-weight: 700;
+      }
+      #cinfo {
+        margin-top: 8px;
+        font-size: 13px;
+        min-height: 20px;
+      }
+      .up {
+        color: var(--bad);
+      }
+      .dn {
+        color: var(--ok);
+      }
+      .eb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
+        font-size: 13px;
+      }
+      .eb .nm {
+        width: 64px;
+        flex: none;
+        font-weight: 600;
+      }
+      .eb .tr {
+        flex: 1;
+        height: 10px;
+        background: var(--bd);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .eb .tr i {
+        display: block;
+        height: 100%;
+        background: var(--blue);
+      }
+      .eb .v {
+        width: 110px;
+        text-align: right;
+        flex: none;
+      }
+      .cfg {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 8px 12px;
+      }
+
+      /* ประวัติ */
+      .mh {
+        position: sticky;
+        top: 0;
+        background: var(--bg);
+        font-weight: 700;
+        padding: 10px 2px 6px;
+        font-size: 13px;
+        color: var(--mu);
+        z-index: 1;
+      }
+      .hi {
+        display: flex;
+        gap: 10px;
+        padding: 10px 12px;
+        margin-bottom: 6px;
+      }
+      .hi-ic {
+        font-size: 20px;
+        flex: none;
+        width: 28px;
+        text-align: center;
+      }
+      .hi-b {
+        flex: 1;
+        min-width: 0;
+        word-break: break-word;
+      }
+
+      /* หน้าต่างกรอกข้อมูล + แจ้งเตือน */
+      .ov {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 16, 26, 0.55);
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 50;
+      }
+      .ov.on {
+        display: flex;
+      }
+      .sheet {
+        background: var(--card);
+        width: 100%;
+        max-width: 520px;
+        border-radius: 18px 18px 0 0;
+        padding: 18px;
+        max-height: 94vh;
+        overflow: auto;
+      }
+      @media (min-width: 721px) {
+        .ov {
+          align-items: center;
+        }
+        .sheet {
+          border-radius: 18px;
+        }
+      }
+      .sh-h {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .sh-h h2 {
+        margin: 0;
+        font-size: 17px;
+      }
+      .sh-f {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-top: 6px;
+      }
+      .toast {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 84px;
+        background: var(--tx);
+        color: var(--bg);
+        padding: 10px 18px;
+        border-radius: 24px;
+        font-size: 14px;
+        z-index: 60;
+        display: none;
+        max-width: 90vw;
+      }
+      .toast.on {
+        display: block;
+      }
+      .toast.bad {
+        background: var(--bad);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <h1>❄️ ดูแลแอร์</h1>
+          <div class="mu" id="upd">กำลังโหลด...</div>
+        </div>
+
+        <!-- กล่องแสดงอุณหภูมิเรียลไทม์ -->
+        <div
+          id="weather-badge"
+          style="
+            background: var(--card);
+            border: 1px solid var(--bd);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+          "
+        >
+          🌡️ กทม: กำลังโหลด...
+        </div>
+        <button id="rf" aria-label="รีเฟรชข้อมูล">🔄 รีเฟรช</button>
+      </header>
+
+      <nav class="tabs" aria-label="เมนูหลัก">
+        <button data-tab="home" class="on">
+          <span class="ic">📊</span><span>ภาพรวม</span>
+        </button>
+        <button data-tab="tech">
+          <span class="ic">📞</span><span>ช่าง</span>
+        </button>
+        <button data-tab="power">
+          <span class="ic">⚡</span><span>ค่าไฟ</span>
+        </button>
+        <button data-tab="hist">
+          <span class="ic">🧾</span><span>ประวัติ</span>
+        </button>
+      </nav>
+
+      <!-- ===== ภาพรวม ===== -->
+      <section class="view on" id="v-home">
+        <div id="warn"></div>
+        <div id="hq"></div>
+        <div class="kpis" id="kpis"></div>
+        <div class="grid2">
+          <div class="card">
+            <h2>สถานะเครื่อง</h2>
+            <div class="bar" id="sbar"></div>
+            <div class="legend" id="slegend"></div>
+          </div>
+          <div class="card">
+            <h2>ค่าซ่อม/บำรุง 6 เดือนล่าสุด (บาท)</h2>
+            <div class="mbars" id="mbars"></div>
+          </div>
+        </div>
+        <div class="card" style="margin-bottom: 14px">
+          <div class="row" style="justify-content: space-between">
+            <h2 style="margin: 0">รายการเครื่องแอร์</h2>
+            <button class="btn pri" id="addAir">＋ เพิ่มแอร์</button>
+          </div>
+          <div class="row" style="margin-top: 10px">
+            <span id="filters" style="display: contents"></span
+            ><input
+              class="s"
+              id="srch"
+              type="search"
+              placeholder="ค้นหา รหัส/ตำแหน่ง/รุ่น"
+              aria-label="ค้นหาเครื่องแอร์"
+            />
+          </div>
+          <div class="scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 50px">รูป</th>
+                  <th>รหัส</th>
+                  <th>ตำแหน่ง</th>
+                  <th>รุ่น</th>
+                  <th>สถานะ</th>
+                  <th>ล้างล่าสุด</th>
+                  <th>นัดถัดไป</th>
+                  <th>แจ้งเตือน</th>
+                  <th>ซ่อม</th>
+                  <th>ค่าใช้จ่าย</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h2>ประวัติล่าสุด</h2>
+            <div id="recent"></div>
+            <div style="margin-top: 8px">
+              <button data-tab="hist">ดูประวัติทั้งหมด →</button>
+            </div>
+          </div>
+          <div class="card">
+            <h2>🤖 ถาม AI เรื่องแอร์</h2>
+            <textarea
+              id="q"
+              rows="3"
+              placeholder="เช่น เครื่องไหนควรล้างก่อน / AC-01 เย็นน้อยเกิดจากอะไร"
+            ></textarea>
+            <div style="margin-top: 8px">
+              <button class="btn pri" id="askbtn">ถาม</button>
+            </div>
+            <div id="ans"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ช่าง ===== -->
+      <section class="view" id="v-tech">
+        <div class="bar2">
+          <input
+            class="s"
+            id="tq"
+            type="search"
+            placeholder="ค้นหาชื่อ / เบอร์ / ความชำนาญ"
+            aria-label="ค้นหาช่าง"
+          />
+          <button class="btn pri" id="addTech">＋ เพิ่มช่าง</button>
+        </div>
+        <div id="tlist"><div class="empty">กำลังโหลด...</div></div>
+      </section>
+
+      <!-- ===== ค่าไฟ ===== -->
+      <section class="view" id="v-power">
+        <div class="bar2">
+          <div class="mu" style="flex: 1">
+            บันทึกบิลค่าไฟรายเดือนเพื่อดูแนวโน้ม (หรือพิมพ์
+            <b>/bill 2026-09 5600 1240</b> ใน Telegram)
+          </div>
+          <button class="btn pri" id="addBill">＋ บันทึกบิล</button>
+        </div>
+        <div id="pbody"><div class="empty">กำลังโหลด...</div></div>
+      </section>
+
+      <!-- ===== ประวัติ ===== -->
+      <section class="view" id="v-hist">
+        <div class="bar2">
+          <input
+            class="s"
+            id="hq2"
+            type="search"
+            placeholder="ค้นหา รหัส / อาการ / ช่าง"
+            aria-label="ค้นหาประวัติ"
+          />
+          <select id="hid" aria-label="กรองตามเครื่อง">
+            <option value="">ทุกเครื่อง</option>
+          </select>
+        </div>
+        <div class="row" id="htypes"></div>
+        <div class="mu" id="hsum" style="margin-bottom: 6px"></div>
+        <div id="hlist"><div class="empty">กำลังโหลด...</div></div>
+      </section>
+    </div>
+
+    <!-- ฟอร์มจัดการแอร์ (เพิ่ม/แก้ไข) -->
+    <!-- ฟอร์มจัดการแอร์ (เพิ่ม/แก้ไข + บันทึกด่วนในตัว) -->
+    <div
+      class="ov"
+      id="m-air"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ma-title"
+    >
+      <form
+        class="sheet"
+        id="f-air"
+        autocomplete="off"
+        style="max-width: 600px"
+      >
+        <div class="sh-h">
+          <h2 id="ma-title">เพิ่มเครื่องแอร์</h2>
+          <button type="button" class="ico" data-close aria-label="ปิด">
+            ✕
+          </button>
+        </div>
+
+        <!-- ข้อมูลหลักเครื่องแอร์ -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+          <label
+            >รหัสเครื่องแอร์ *<input
+              id="a-id"
+              required
+              maxlength="20"
+              placeholder="เช่น AC-16"
+          /></label>
+          <label
+            >สถานะ
+            <select id="a-status" style="width: 100%">
+              <option value="ปกติ">ปกติ</option>
+              <option value="เย็นน้อย">เย็นน้อย</option>
+              <option value="เสีย">เสีย</option>
+              <option value="รอซ่อม">รอซ่อม</option>
+              <option value="รอช่างนัด">รอช่างนัด</option>
+            </select>
+          </label>
+        </div>
+
+        <label
+          >ตำแหน่ง / ห้อง *<input
+            id="a-loc"
+            required
+            maxlength="100"
+            placeholder="เช่น ห้องประชุมใหญ่"
+        /></label>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px">
+          <label
+            >รุ่น / ยี่ห้อ<input
+              id="a-model"
+              maxlength="80"
+              placeholder="เช่น Daikin Inverter"
+          /></label>
+          <label
+            >ขนาด BTU<input
+              id="a-btu"
+              inputmode="numeric"
+              placeholder="เช่น 18000"
+          /></label>
+        </div>
+
+        <!-- ส่วนเพิ่มใหม่: บันทึกงานด่วน & ประวัติเฉพาะเครื่องนี้ (สำหรับเครื่องที่มีอยู่แล้ว) -->
+        <div
+          id="quick-action-box"
+          style="
+            margin-top: 12px;
+            border-top: 1px solid var(--bd);
+            padding-top: 10px;
+            display: none;
+          "
+        >
+          <h3 style="font-size: 14px; margin: 0 0 8px; color: var(--blue)">
+            ⚡ บันทึกงานด่วนสำหรับเครื่องนี้
+          </h3>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 8px;
+              margin-bottom: 8px;
+            "
+          >
+            <select id="qa-type" style="width: 100%">
+              <option value="ล้างแอร์">🧼 ล้างแอร์ (+6 เดือน)</option>
+              <option value="ซ่อมแอร์">🔧 ซ่อมแอร์</option>
+              <option value="ตรวจเช็ค">🔍 ตรวจเช็คสภาพ</option>
+            </select>
+            <input
+              id="qa-cost"
+              inputmode="numeric"
+              placeholder="ค่าใช้จ่าย (บาท)"
+            />
+          </div>
+          <input
+            id="qa-detail"
+            placeholder="รายละเอียดเพิ่มเติม (เช่น เปลี่ยนแคป, ล้างใหญ่)"
+            style="width: 100%; margin-bottom: 8px"
+          />
+          <button
+            type="button"
+            class="btn pri"
+            id="qa-btn"
+            style="width: 100%; font-size: 13px; min-height: 36px"
+          >
+            + บันทึกรายการนี้ทันที
+          </button>
+
+          <div style="margin-top: 12px">
+            <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px">
+              📜 ประวัติการดูแลย้อนหลังของเครื่องนี้:
+            </div>
+            <div
+              id="qa-history"
+              style="
+                max-height: 120px;
+                overflow-y: auto;
+                background: var(--bg);
+                padding: 8px;
+                border-radius: 8px;
+                font-size: 12px;
+                color: var(--mu);
+              "
+            >
+              กำลังโหลด...
+            </div>
+          </div>
+        </div>
+
+        <div class="err" id="ma-err" role="alert" style="margin-top: 8px"></div>
+        <div class="sh-f" style="margin-top: 12px">
+          <button type="button" class="btn dng" id="ma-del" hidden>🗑 ลบ</button>
+          <span style="flex: 1"></span>
+          <button type="button" class="btn" data-close>ยกเลิก</button>
+          <button class="btn pri" id="ma-save">บันทึกข้อมูลหลัก</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ฟอร์มช่าง -->
+    <div
+      class="ov"
+      id="m-tech"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mt-title"
+    >
+      <form class="sheet" id="f-tech" autocomplete="off">
+        <div class="sh-h">
+          <h2 id="mt-title">เพิ่มช่าง</h2>
+          <button type="button" class="ico" data-close aria-label="ปิด">
+            ✕
+          </button>
+        </div>
+        <input type="hidden" id="t-id" />
+        <label
+          >ชื่อช่าง / บริษัท *<input
+            id="t-name"
+            required
+            maxlength="80"
+            placeholder="เช่น ช่างสมชาย / บริษัท ABC แอร์"
+        /></label>
+        <label
+          >เบอร์โทร *<input
+            id="t-phone"
+            type="tel"
+            inputmode="tel"
+            required
+            placeholder="081-234-5678"
+        /></label>
+        <label
+          >LINE ID<input id="t-line" placeholder="@abcair หรือ somchai.air"
+        /></label>
+        <label
+          >ความชำนาญ / พื้นที่บริการ<input
+            id="t-area"
+            maxlength="120"
+            placeholder="เช่น ล้างแอร์ติดผนัง, เติมน้ำยา, ในตัวเมือง"
+        /></label>
+        <label
+          >ราคาล้างอ้างอิง (บาท/เครื่อง)<input
+            id="t-price"
+            inputmode="decimal"
+            placeholder="800"
+        /></label>
+        <label
+          >หมายเหตุ<textarea
+            id="t-note"
+            rows="2"
+            maxlength="300"
+            placeholder="เช่น นัดล่วงหน้า 2 วัน มีใบเสร็จ"
+          ></textarea>
+        </label>
+        <label class="chk"
+          ><input type="checkbox" id="t-fav" /> ⭐ ช่างประจำ / แนะนำ
+          (แสดงเป็นอันดับแรก)</label
+        >
+        <div class="err" id="mt-err" role="alert"></div>
+        <div class="sh-f">
+          <button type="button" class="btn dng" id="mt-del" hidden>🗑 ลบ</button
+          ><span style="flex: 1"></span>
+          <button type="button" class="btn" data-close>ยกเลิก</button
+          ><button class="btn pri" id="mt-save">บันทึก</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ฟอร์มบิลค่าไฟ -->
+    <div
+      class="ov"
+      id="m-bill"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="mb-title"
+    >
+      <form class="sheet" id="f-bill" autocomplete="off">
+        <div class="sh-h">
+          <h2 id="mb-title">บันทึกบิลค่าไฟ</h2>
+          <button type="button" class="ico" data-close aria-label="ปิด">
+            ✕
+          </button>
+        </div>
+        <label
+          >เดือน *<input
+            id="b-month"
+            type="month"
+            required
+            pattern="\d{4}-\d{2}"
+            placeholder="2026-09"
+        /></label>
+        <label
+          >ค่าไฟ (บาท) *<input
+            id="b-baht"
+            inputmode="decimal"
+            required
+            placeholder="5600"
+        /></label>
+        <label
+          >หน่วยไฟ (kWh) — ไม่บังคับ<input
+            id="b-kwh"
+            inputmode="decimal"
+            placeholder="1240"
+        /></label>
+        <label
+          >หมายเหตุ<input
+            id="b-note"
+            maxlength="200"
+            placeholder="เช่น เดือนนี้ติดแอร์เพิ่ม 1 เครื่อง"
+        /></label>
+        <div class="mu" id="b-hint" style="margin-bottom: 8px"></div>
+        <div class="err" id="mb-err" role="alert"></div>
+        <div class="sh-f">
+          <button type="button" class="btn dng" id="mb-del" hidden>🗑 ลบ</button
+          ><span style="flex: 1"></span>
+          <button type="button" class="btn" data-close>ยกเลิก</button
+          ><button class="btn pri" id="mb-save">บันทึก</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal ขยายรูปภาพ -->
+    <div
+      class="ov"
+      id="m-img"
+      role="dialog"
+      aria-modal="true"
+      style="align-items: center; justify-content: center"
+    >
+      <div
+        class="sheet"
+        style="max-width: 600px; padding: 12px; text-align: center"
+      >
+        <div class="sh-h" style="margin-bottom: 8px">
+          <h2 style="font-size: 16px; margin: 0">รูปภาพเครื่องแอร์</h2>
+          <button type="button" class="ico" data-close aria-label="ปิด">
+            ✕
+          </button>
+        </div>
+        <div style="overflow: hidden; border-radius: 10px; background: #000">
+          <img
+            id="zoom-img"
+            src=""
+            alt="Air Image"
+            style="
+              width: 100%;
+              max-height: 75vh;
+              object-fit: contain;
+              display: block;
+            "
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+            const KEY = <?!= JSON.stringify(key).replace(/</g, "\\u003c") ?>;
+            const SC = { "ปกติ":"var(--ok)", "เย็นน้อย":"var(--warn)", "เสีย":"var(--bad)", "รอซ่อม":"var(--org)", "รอช่างนัด":"var(--blue)", "ไม่ระบุ":"#9aa4b2" };
+            const AC = { "เลยกำหนด":"var(--bad)", "ใกล้ถึงกำหนด":"var(--org)", "ตรวจสอบสถานะ":"var(--warn)", "ยังไม่มีนัด":"#9aa4b2" };
+
+            const IMG = "https://raw.githubusercontent.com/kxma-blazi/air-maintenance-images/main/";
+            const TH_M = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+            const TYPE_ICON = { "ล้างแอร์":"🧼", "ซ่อม":"🔧", "แจ้งปัญหา":"⚠️" };
+            let D = null, FILTER = "all";
+            const S = { tab:"home", techs:null, power:null, hist:null, pm:"baht", techQ:"", hf:{ type:"", id:"", q:"", n:50 } };
+
+            const $ = id => document.getElementById(id);
+            const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+            const baht = n => Number(n || 0).toLocaleString("th-TH");
+            const num1 = n => Number(n || 0).toLocaleString("th-TH", { maximumFractionDigits:1 });
+            const compact = n => n >= 1000 ? (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, "") + "k" : String(Math.round(n));
+            const mLabel = k => TH_M[+k.slice(5, 7) - 1] + " " + k.slice(0, 4);
+            const dayTxt = a => a.days == null ? "" : ("" + " <span class=\"mu\">(" + (a.days < 0 ? "เลย " + (-a.days) + " วัน" : a.days === 0 ? "วันนี้" : "อีก " + a.days + " วัน") + ")</span>");
+            const phoneTxt = p => { const d = String(p || "").replace(/\D/g, "");
+              return /^0\d{9}$/.test(d) && p.indexOf("+") !== 0 ? d.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3")
+                   : /^0\d{8}$/.test(d) && p.indexOf("+") !== 0 ? d.replace(/(\d{2})(\d{3})(\d{4})/, "$1-$2-$3") : p; };
+            const telHref = p => "tel:" + String(p).replace(/[^\d+]/g, "");
+            const lineHref = id => "https://line.me/R/ti/p/" + (id.charAt(0) === "@" ? "@" + encodeURIComponent(id.slice(1)) : "~" + encodeURIComponent(id));
+            const hue = s => { let h = 0; for (const c of String(s)) h = (h * 31 + c.codePointAt(0)) % 360; return h; };
+            const nowTxt = () => new Date().toLocaleTimeString("th-TH", { hour:"2-digit", minute:"2-digit" });
+
+            function call(fn, ...args) {
+              return new Promise((ok, bad) => google.script.run
+                .withSuccessHandler(ok)
+                .withFailureHandler(e => bad(new Error(String((e && e.message) || e).replace(/^(Error|Exception):\s*/, ""))))
+                [fn](KEY, ...args));
+            }
+            let tt;
+            function toast(m, bad) { const t = $("toast"); t.textContent = m; t.className = "toast on" + (bad ? " bad" : ""); clearTimeout(tt); tt = setTimeout(() => t.className = "toast", 2800); }
+            function openM(id) { $(id).classList.add("on"); document.body.style.overflow = "hidden"; const f = $(id).querySelector("input:not([type=hidden])"); if (f) setTimeout(() => f.focus(), 60); }
+            function closeM(id) { $(id).classList.remove("on"); document.body.style.overflow = ""; }
+            function busy(btn, on, txt) { btn.disabled = on; if (txt) btn.textContent = on ? "กำลังบันทึก..." : txt; }
+            function failBox(el, e, retry) { el.innerHTML = ("" + "<div class=\"errbox\">โหลดไม่สำเร็จ: " + (esc(e.message)) + " <button style=\"margin-left:8px\" id=\"retry\">ลองใหม่</button></div>"); $("retry").onclick = retry; }
+            function confirm2(btn, label, run) {
+              if (btn.dataset.armed) { clearTimeout(+btn.dataset.armed); delete btn.dataset.armed; btn.textContent = label; run(); return; }
+              btn.textContent = "แน่ใจ? กดอีกครั้งเพื่อลบ";
+              btn.dataset.armed = setTimeout(() => { delete btn.dataset.armed; btn.textContent = label; }, 4000);
+            }
+
+            /* ===================== แท็บ ===================== */
+            function go(t) {
+              S.tab = t;
+              document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + t));
+              document.querySelectorAll("nav.tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === t));
+              if (t === "tech") { if (S.techs) renderTech(); else loadTech(); }
+              if (t === "power" && !S.power) loadPower();
+              if (t === "hist" && !S.hist) loadHist();
+              window.scrollTo(0, 0);
+            }
+            function refreshCurrent() {
+              ({ home:loadHome, tech:loadTech, power:loadPower, hist:loadHist })[S.tab]();
+            }
+
+            /* ===================== ภาพรวม ===================== */
+            function loadHome() {
+              $("upd").textContent = "กำลังโหลด...";
+              call("getDashboardData").then(d => { D = d; renderHome();
+                if (!S.techs) call("apiTechList").then(r => { S.techs = r.techs; renderQuick(); if (S.tab === "tech") renderTech(); }).catch(() => {});
+              }).catch(e => { $("upd").textContent = "โหลดไม่สำเร็จ: " + e.message; });
+            }
+            function setF(f) { FILTER = f; renderHome(); }
+            function renderHome() {
+        $("upd").textContent = "อัปเดต " + D.updated;
+
+        // เพิ่มการแสดงอุณหภูมิกรุงเทพฯ (หากมีข้อมูลส่งมาจาก Apps Script)
+        if (typeof D.weather !== "undefined" && D.weather && D.weather.temp != null) {
+          const weatherBox = $("weather-badge");
+          if (weatherBox) {
+            weatherBox.innerHTML = `🌡️ กทม: <b>${D.weather.temp}°C</b> <span class="mu" style="font-weight:400">(ความชื้น ${D.weather.humidity}%)</span>`;
+          }
+        }
+
+        const bad = D.airs.filter((a) => a.status && a.status !== "ปกติ").length;
+        const over = D.byAlert["เลยกำหนด"] || 0,
+          soon = D.byAlert["ใกล้ถึงกำหนด"] || 0;
+        const k = [
+          ["เครื่องทั้งหมด", D.total, ""],
+          ["ปกติ", D.byStatus["ปกติ"] || 0, "var(--ok)"],
+          ["มีปัญหา", bad, bad ? "var(--bad)" : ""],
+          ["เลยกำหนดล้าง", over, over ? "var(--bad)" : ""],
+          ["ใกล้ถึงกำหนด", soon, soon ? "var(--org)" : ""],
+          ["ค่าซ่อม/บำรุงรวม (บาท)", baht(D.cost), ""],
+        ];
+        $("kpis").innerHTML = k
+          .map(
+            (x) =>
+              "" +
+              '<div class="card kpi"><div class="n" style="color:' +
+              x[2] +
+              '">' +
+              x[1] +
+              '</div><div class="l">' +
+              x[0] +
+              "</div></div>",
+          )
+          .join("");
+
+        const keys = Object.keys(D.byStatus);
+        $("sbar").innerHTML = keys
+          .map(
+            (s) =>
+              "" +
+              '<div style="width:' +
+              (D.byStatus[s] / D.total) * 100 +
+              "%;background:" +
+              (SC[s] || "#9aa4b2") +
+              '"></div>',
+          )
+          .join("");
+        $("slegend").innerHTML = keys
+          .map(
+            (s) =>
+              "" +
+              '<span><i class="dot" style="background:' +
+              (SC[s] || "#9aa4b2") +
+              '"></i>' +
+              esc(s) +
+              " " +
+              D.byStatus[s] +
+              "</span>",
+          )
+          .join("");
+
+        const max = Math.max.apply(null, D.monthly.map((m) => m.cost).concat([1]));
+        $("mbars").innerHTML = D.monthly
+          .map(
+            (m) =>
+              "" +
+              '<div class="c"><div style="font-size:11px">' +
+              (m.cost ? baht(m.cost) : "") +
+              '</div><div class="b" style="height:' +
+              (m.cost / max) * 80 +
+              'px"></div>' +
+              m.label +
+              "</div>",
+          )
+          .join("");
+
+        const F = [
+          ["all", "ทั้งหมด"],
+          ["need", "ต้องดูแล"],
+          ["bad", "มีปัญหา"],
+          ["over", "เลยกำหนด"],
+        ];
+        $("filters").innerHTML = F.map(
+          (f) =>
+            "" +
+            '<button class="chip ' +
+            (FILTER === f[0] ? "on" : "") +
+            '" onclick="setF(\'' +
+            f[0] +
+            "')\">" +
+            f[1] +
+            "</button>",
+        ).join("");
+
+        const qs = $("srch").value.trim().toLowerCase();
+        const list = D.airs.filter(
+          (a) =>
+            (FILTER === "all"
+              ? true
+              : FILTER === "need"
+                ? a.alert && a.alert !== "-"
+                : FILTER === "bad"
+                  ? a.status && a.status !== "ปกติ"
+                  : a.alert === "เลยกำหนด") &&
+            (!qs || (a.id + " " + a.loc + " " + a.model).toLowerCase().includes(qs)),
+        );
+
+        $("rows").innerHTML = list.length
+          ? list
+              .map((a) => {
+                const imgUrl = IMG + encodeURIComponent(a.id) + ".jpg?v=2";
+                const imgUrlAssets =
+                  "https://raw.githubusercontent.com/kxma-blazi/air-maintenance-images/main/assets/" +
+                  encodeURIComponent(a.id) +
+                  ".jpg?v=2";
+
+                return (
+                  "" +
+                  "<tr>" +
+                  '<td><img class="th" alt="แอร์" src="' +
+                  imgUrl +
+                  '" title="คลิกเพื่อขยายรูป" data-act="zoom" data-src="' +
+                  imgUrl +
+                  '" ' +
+                  "onerror=\"if(this.src.indexOf('assets')===-1){this.src='" +
+                  imgUrlAssets +
+                  "'}else{this.src='https://via.placeholder.com/40?text=No+Img'}\" " +
+                  'style="width:40px; height:40px; object-fit:cover; border-radius:6px; background:#222; cursor:pointer;"></td>' +
+                  "<td><b>" +
+                  esc(a.id) +
+                  "</b></td>" +
+                  '<td class="w">' +
+                  esc(a.loc) +
+                  "</td>" +
+                  '<td class="w">' +
+                  esc(a.model) +
+                  "</td>" +
+                  '<td><span class="pill" style="background:' +
+                  (SC[a.status || "ไม่ระบุ"] || "#9aa4b2") +
+                  '">' +
+                  esc(a.status || "ไม่ระบุ") +
+                  "</span></td>" +
+                  "<td>" +
+                  esc(a.lastWash || "-") +
+                  "</td>" +
+                  "<td>" +
+                  esc(a.next || "-") +
+                  dayTxt(a) +
+                  "</td>" +
+                  "<td>" +
+                  (a.alert && a.alert !== "-"
+                    ? '<span class="pill" style="background:' +
+                      (AC[a.alert] || "#9aa4b2") +
+                      '">' +
+                      esc(a.alert) +
+                      "</span>"
+                    : "-") +
+                  "</td>" +
+                  "<td>" +
+                  a.count +
+                  "</td>" +
+                  "<td>" +
+                  baht(a.cost) +
+                  "</td>" +
+                  '<td><button class="ico" data-act="edit-air" data-id="' +
+                  esc(a.id) +
+                  '" aria-label="แก้ไข ' +
+                  esc(a.id) +
+                  '">✏️</button></td>' +
+                  "</tr>"
+                );
+              })
+              .join("")
+          : '<tr><td colspan="11" class="mu">ไม่มีรายการ</td></tr>';
+
+        $("warn").innerHTML =
+          D.pending && D.pending.length
+            ? "" +
+              '<div class="warnbox">⏳ ค้างซ่อมนาน: ' +
+              D.pending
+                .map(
+                  (p) =>
+                    esc(p.id) +
+                    " (" +
+                    esc(p.status) +
+                    (p.days == null ? "" : " " + p.days + " วัน") +
+                    ")",
+                )
+                .join(", ") +
+              "</div>"
+            : "";
+
+        $("recent").innerHTML = D.recent.length
+          ? D.recent
+              .map(
+                (r) =>
+                  "" +
+                  '\n          <div class="rec"><b>' +
+                  esc(r.id) +
+                  "</b> · " +
+                  esc(r.type) +
+                  ' <span class="mu">' +
+                  esc(r.date) +
+                  "</span>\n          " +
+                  (r.detail ? "<div>" + esc(r.detail) + "</div>" : "") +
+                  '\n          <div class="mu">' +
+                  (r.tech ? esc(r.tech) + " · " : "") +
+                  (r.cost ? baht(r.cost) + " บาท" : "") +
+                  "</div></div>",
+              )
+              .join("")
+          : "" + '<div class="mu">ยังไม่มีประวัติ</div>';
+        renderQuick();
+      }
+
+            function renderQuick() {
+              const el = $("hq");
+              if (!D || !S.techs) { el.innerHTML = ""; return; }
+              const need = D.airs.filter(a => (a.alert && a.alert !== "-" && a.alert !== "ยังไม่มีนัด") || (a.status && a.status !== "ปกติ")).length + (D.pending ? D.pending.length : 0);
+              if (!need) { el.innerHTML = ""; return; }
+              if (!S.techs.length) { el.innerHTML = ("" + "<div class=\"card quick\"><div class=\"t\"><b>มีแอร์ที่ต้องดูแล</b><div class=\"mu\">ยังไม่มีเบอร์ช่างในระบบ</div></div><button class=\"btn pri\" data-tab=\"tech\">＋ เพิ่มช่าง</button></div>"); return; }
+              el.innerHTML = ("" + "<div class=\"card quick\"><div class=\"t\"><b>มีแอร์ที่ต้องดูแล " + (need) + " รายการ</b><div class=\"mu\">โทรหาช่างได้ทันที</div></div>") +
+                S.techs.slice(0, 2).map(t => ("" + "<a class=\"btn pri\" href=\"" + (esc(telHref(t.phone))) + "\">📞 " + (esc(t.name)) + "</a>")).join("") +
+                ("" + "<button data-tab=\"tech\">ช่างทั้งหมด</button></div>");
+            }
+
+            function openAir(air) {
+                    $("ma-title").textContent = air ? "จัดการเครื่องแอร์ " + air.id : "เพิ่มเครื่องแอร์";
+                    $("a-id").value = air ? air.id : ""; $("a-id").readOnly = !!air;
+                    $("a-loc").value = air ? air.loc : ""; $("a-model").value = air ? air.model : "";
+                    $("a-btu").value = air && air.btu ? air.btu : ""; $("a-status").value = air ? (air.status || "ปกติ") : "ปกติ";
+                    $("ma-del").hidden = !air; $("ma-err").textContent = "";
+
+                    // ควบคุมการแสดงผลกล่องบันทึกด่วน (แสดงเฉพาะกรณีแก้ไขเครื่องที่มีอยู่แล้ว)
+                    const qaBox = $("quick-action-box");
+                    if (air) {
+                      qaBox.style.display = "block";
+                      $("qa-cost").value = "";
+                      $("qa-detail").value = "";
+                      // ดึงประวัติเฉพาะเครื่องนี้มาแสดง
+                      const hist = D.recent ? D.recent.filter(r => r.id === air.id) : [];
+                      $("qa-history").innerHTML = hist.length ? hist.map(h =>
+                        `<div>• <b>${esc(h.type)}</b> (${h.date}) ${h.detail ? '— ' + esc(h.detail) : ''} ${h.cost ? '(' + baht(h.cost) + '฿)' : ''}</div>`
+                      ).join("") : "ยังไม่มีประวัติสำหรับเครื่องนี้";
+                    } else {
+                      qaBox.style.display = "none";
+                    }
+
+                    openM("m-air");
+                  }
+
+                  // เพิ่ม Event คลิกปุ่มบันทึกด่วนใน Modal
+                  $("qa-btn").onclick = function() {
+                    const id = $("a-id").value;
+                    const type = $("qa-type").value;
+                    const cost = $("qa-cost").value;
+                    const detail = $("qa-detail").value;
+                    const btn = this;
+
+                    busy(btn, true, "+ บันทึกรายการนี้ทันที");
+                    call("apiQuickLog", { id: id, type: type, cost: cost, detail: detail })
+                      .then(d => {
+                        D = d;
+                        toast("บันทึกงานด่วนสำเร็จ ✓");
+                        // รีเฟรชประวัติในกล่องด่วนทันที
+                        const updatedAir = D.airs.filter(x => x.id === id)[0];
+                        openAir(updatedAir);
+                        renderHome();
+                      })
+                      .catch(e => { toast(e.message, true); })
+                      .finally(() => busy(btn, false, "+ บันทึกรายการนี้ทันที"));
+                  };
+
+            function ask() {
+              const q = $("q").value.trim(); if (!q) return;
+              const btn = $("askbtn"), ans = $("ans");
+              btn.disabled = true; ans.textContent = "กำลังคิด...";
+              call("askAI", q).then(t => { ans.textContent = t; }).catch(e => { ans.textContent = "❌ " + e.message; }).finally(() => { btn.disabled = false; });
+            }
+
+            /* ===================== ช่าง ===================== */
+            function loadTech() {
+              call("apiTechList").then(r => { S.techs = r.techs; renderTech(); renderQuick(); $("upd").textContent = "อัปเดต " + nowTxt(); })
+                .catch(e => failBox($("tlist"), e, loadTech));
+            }
+            function techCard(t) {
+              const meta = [t.price != null ? "ราคา ~" + baht(t.price) + " ฿/เครื่อง" : "",
+                t.jobs ? "ทำงาน " + t.jobs + " ครั้ง · รวม " + baht(t.total) + " ฿" : "ยังไม่เคยบันทึกงาน", t.last ? "ล่าสุด " + t.last : ""].filter(Boolean).map(esc).join(" · ");
+              const hist = t.recent.length ? t.recent.map(r => ("" + "<div class=\"rec\"><b>" + (esc(r.id)) + "</b> · " + (esc(r.type)) + " <span class=\"mu\">" + (esc(r.date)) + "</span>" + (r.detail ? "<div>" + esc(r.detail) + "</div>" : "") + (r.cost ? ("" + "<div class=\"mu\">" + (baht(r.cost)) + " บาท</div>") : "") + "</div>")).join("")
+                : ("" + "<div class=\"mu\">ยังไม่มีงานที่ระบุชื่อช่างนี้</div>");
+              return ("" + "<div class=\"card tc\" data-id=\"" + (esc(t.id)) + "\">\n          <div class=\"tc-top\">\n            <div class=\"av\" style=\"background:hsl(" + (hue(t.name)) + " 50% 42%)\" aria-hidden=\"true\">" + (esc([...t.name][0] || "?")) + "</div>\n            <div class=\"tc-main\">\n              <div class=\"tc-name\">" + (t.fav ? "⭐ " : "") + (esc(t.name)) + "</div>\n              " + (t.area ? ("" + "<div class=\"meta\">" + (esc(t.area)) + "</div>") : "") + "\n              <div class=\"meta\">" + (meta) + "</div>\n              " + (t.note ? ("" + "<div class=\"note\">" + (esc(t.note)) + "</div>") : "") + "\n            </div>\n            <button class=\"ico\" data-act=\"fav\" data-id=\"" + (esc(t.id)) + "\" aria-label=\"" + (t.fav ? "เลิกเป็นช่างประจำ" : "ตั้งเป็นช่างประจำ") + "\">" + (t.fav ? "★" : "☆") + "</button>\n            <button class=\"ico\" data-act=\"edit\" data-id=\"" + (esc(t.id)) + "\" aria-label=\"แก้ไข " + (esc(t.name)) + "\">✏️</button>\n          </div>\n          <div class=\"tc-act\">\n            <a class=\"btn pri\" href=\"" + (esc(telHref(t.phone))) + "\">📞 โทร " + (esc(phoneTxt(t.phone))) + "</a>\n            " + (t.line ? ("" + "<a class=\"btn\" target=\"_blank\" rel=\"noopener\" href=\"" + (esc(lineHref(t.line))) + "\">💬 LINE</a>") : "") + "\n            <button data-act=\"th\" data-id=\"" + (esc(t.id)) + "\">🧾 ประวัติงาน</button>\n          </div>\n          <div class=\"tc-hist\" id=\"th-" + (esc(t.id)) + "\" hidden>" + (hist) + "</div>\n        </div>");
+            }
+            function renderTech() {
+              const q = S.techQ.trim().toLowerCase();
+              const list = S.techs.filter(t => !q || [t.name, t.phone, t.line, t.area, t.note].join(" ").toLowerCase().includes(q));
+              $("tlist").innerHTML = !S.techs.length
+                ? ("" + "<div class=\"empty\"><div class=\"big\">📞</div><p><b>ยังไม่มีช่างในระบบ</b></p><button class=\"btn pri\" data-act=\"add-tech\">＋ เพิ่มช่างคนแรก</button></div>")
+                : list.length ? list.map(techCard).join("") : ("" + "<div class=\"empty\">ไม่พบช่างที่ค้นหา</div>");
+            }
+            function openTech(t) {
+              $("mt-title").textContent = t ? "แก้ไขช่าง" : "เพิ่มช่าง";
+              $("t-id").value = t ? t.id : ""; $("t-name").value = t ? t.name : ""; $("t-phone").value = t ? t.phone : "";
+              $("t-line").value = t ? t.line : ""; $("t-area").value = t ? t.area : ""; $("t-price").value = t && t.price != null ? t.price : "";
+              $("t-note").value = t ? t.note : ""; $("t-fav").checked = t ? t.fav : !(S.techs && S.techs.length);
+              $("mt-del").hidden = !t; $("mt-err").textContent = "";
+              openM("m-tech");
+            }
+            function techDone(r, msg) { S.techs = r.techs; renderTech(); renderQuick(); if (msg) toast(msg); }
+
+            /* ===================== ค่าไฟ ===================== */
+            function loadPower() {
+              call("apiPowerData").then(d => { S.power = d; renderPower(); $("upd").textContent = "อัปเดต " + nowTxt(); })
+                .catch(e => failBox($("pbody"), e, loadPower));
+            }
+            function chg(v) { return v == null ? ("" + "<span class=\"mu\">–</span>") : ("" + "<span class=\"" + (v > 0 ? "up" : v < 0 ? "dn" : "") + "\">" + (v > 0 ? "▲ +" : v < 0 ? "▼ " : "") + (v) + "%</span>"); }
+            function renderPower() {
+              const P = S.power, k = P.kpi, has = !!k.latest;
+              const cards = has ? [
+                ["ค่าไฟเดือนล่าสุด (บาท)", baht(k.latest.baht), mLabel(k.latest.month)],
+                ["เทียบเดือนก่อน", chg(k.mom), k.yoy != null ? "เทียบปีก่อน " + (k.yoy > 0 ? "+" : "") + k.yoy + "%" : ""],
+                ["เฉลี่ยต่อเดือน (บาท)", baht(k.avg), "จาก " + k.n + " เดือนล่าสุด"],
+                ["รวม 12 เดือน (บาท)", baht(k.total), k.peak ? "สูงสุด " + mLabel(k.peak.month) : ""],
+                ["หน่วยไฟล่าสุด (kWh)", k.latest.kwh != null ? baht(k.latest.kwh) : "–", k.rate != null ? "เฉลี่ย " + k.rate + " ฿/หน่วย" : ""]
+              ] : [];
+              const kp = cards.map(c => ("" + "<div class=\"card kpi\"><div class=\"n\">" + (c[1]) + "</div><div class=\"l\">" + (c[0]) + "</div><div class=\"sub\">" + (esc(c[2])) + "</div></div>")).join("");
+
+              const hasKwh = P.series.some(s => s.kwh != null);
+              if (S.pm === "kwh" && !hasKwh) S.pm = "baht";
+              const vals = P.series.map(s => s[S.pm]).filter(v => v != null), mx = Math.max.apply(null, vals.concat([1]));
+              const pkI = vals.length ? P.series.findIndex(s => s[S.pm] === Math.max.apply(null, vals)) : -1;
+              const bars = P.series.map((s, i) => { const v = s[S.pm];
+                return ("" + "<button class=\"cb\" data-act=\"bar\" data-i=\"" + (i) + "\" aria-label=\"" + (esc(s.label)) + " " + (v == null ? "ไม่มีข้อมูล" : baht(v)) + "\"><span class=\"cv\">" + (v == null ? "" : compact(v)) + "</span><span class=\"cbar " + (v == null ? "nil" : "") + " " + (i === pkI ? "pk" : "") + "\" style=\"height:" + (v == null ? 14 : Math.max(4, v / mx * 110)) + "px\"></span><span class=\"cl\">" + (esc(s.label)) + "</span></button>"); }).join("");
+
+              const bills = P.bills.length ? ("" + "<div class=\"scroll\"><table><thead><tr><th>เดือน</th><th class=\"r\">ค่าไฟ (บาท)</th><th class=\"r\">หน่วย</th><th class=\"r\">฿/หน่วย</th><th>เทียบเดือนก่อน</th><th>หมายเหตุ</th><th></th></tr></thead><tbody>") +
+                P.bills.map(b => ("" + "<tr><td><b>" + (esc(mLabel(b.month))) + "</b></td><td class=\"r\">" + (baht(b.baht)) + "</td><td class=\"r\">" + (b.kwh != null ? baht(b.kwh) : "–") + "</td><td class=\"r\">" + (b.rate != null ? b.rate : "–") + "</td><td>" + (chg(b.mom)) + "</td><td class=\"w mu\">" + (esc(b.note)) + "</td><td><button class=\"ico\" data-act=\"edit-bill\" data-m=\"" + (esc(b.month)) + "\" aria-label=\"แก้ไข\">✏️</button></td></tr>")).join("") + ("" + "</tbody></table></div>")
+                : ("" + "<div class=\"mu\">ยังไม่มีบิล</div>");
+
+              const E = P.est, emax = Math.max.apply(null, E.rows.map(r => r.baht || 0).concat([1])), c = P.cfg;
+              const est = E.rows.map(r => ("" + "<div class=\"eb\"><span class=\"nm\">" + (esc(r.id)) + "</span><span class=\"tr\" title=\"" + (esc(r.loc)) + "\"><i style=\"width:" + (r.baht ? r.baht / emax * 100 : 0) + "%\"></i></span><span class=\"v\">" + (r.baht == null ? '<span class="mu">ไม่มี BTU</span>' : "~" + baht(r.baht) + " ฿ · " + r.share + "%") + "</span></div>")).join("");
+
+              $("pbody").innerHTML = (has ? ("" + "<div class=\"kpis\">" + (kp) + "</div>") : ("" + "<div class=\"card empty\" style=\"margin-bottom:14px\"><div class=\"big\">⚡</div><p><b>ยังไม่มีข้อมูลค่าไฟ</b></p><button class=\"btn pri\" data-act=\"add-bill\">＋ บันทึกบิลเดือนแรก</button></div>")) +
+                (has ? ("" + "<div class=\"card\" style=\"margin-bottom:14px\"><div class=\"row\" style=\"justify-content:space-between\"><h2 style=\"margin:0\">แนวโน้ม 12 เดือน</h2><span class=\"row\" style=\"margin:0\"><button class=\"chip " + (S.pm === "baht" ? "on" : "") + "\" data-act=\"pm\" data-v=\"baht\">฿ ค่าไฟ</button><button class=\"chip " + (S.pm === "kwh" ? "on" : "") + "\" data-act=\"pm\" data-v=\"kwh\" " + (hasKwh ? "" : "disabled") + ">kWh หน่วยไฟ</button></span></div>\n            <div class=\"chart\">" + (bars) + "</div><div id=\"cinfo\" class=\"mu\">แตะแท่งกราฟเพื่อดูรายละเอียด</div></div>\n            <div class=\"card\" style=\"margin-bottom:14px\"><h2>ประวัติบิลค่าไฟ</h2>" + (bills) + "</div>") : "") +
+                ("" + "<div class=\"card\"><div class=\"row\" style=\"justify-content:space-between\"><h2 style=\"margin:0\">ประมาณการค่าไฟแอร์รายเครื่อง</h2><button data-act=\"cfg\">⚙️ ปรับสมมติฐาน</button></div>\n            <div class=\"mu\" style=\"margin:6px 0 10px\">รวม ~" + (baht(E.baht)) + " บาท/เดือน (~" + (baht(E.kwh)) + " kWh)</div>\n            <div id=\"cfgbox\" hidden><div class=\"cfg\">\n              <label>ค่าไฟ ฿/หน่วย<input id=\"c-rate\" inputmode=\"decimal\" value=\"" + (c.rate) + "\"></label>\n              <label>ชม./วัน<input id=\"c-hours\" inputmode=\"decimal\" value=\"" + (c.hours) + "\"></label>\n              <label>วัน/เดือน<input id=\"c-days\" inputmode=\"decimal\" value=\"" + (c.days) + "\"></label>\n              <label>EER (BTU/วัตต์)<input id=\"c-eer\" inputmode=\"decimal\" value=\"" + (c.eer) + "\"></label></div>\n              <div class=\"err\" id=\"cfg-err\" role=\"alert\"></div><button class=\"btn pri\" id=\"cfg-save\" data-act=\"cfg-save\" style=\"margin-bottom:12px\">บันทึกสมมติฐาน</button></div>\n            " + (est || '<div class="mu">ยังไม่มีเครื่องแอร์</div>') + "</div>");
+            }
+            function openBill(month) {
+              const b = month ? S.power.bills.filter(x => x.month === month)[0] : null;
+              $("mb-title").textContent = b ? "แก้ไขบิล " + mLabel(b.month) : "บันทึกบิลค่าไฟ";
+              $("b-month").value = b ? b.month : S.power ? S.power.cur : ""; $("b-month").readOnly = !!b;
+              $("b-baht").value = b ? b.baht : ""; $("b-kwh").value = b && b.kwh != null ? b.kwh : ""; $("b-note").value = b ? b.note : "";
+              $("mb-del").hidden = !b; $("mb-err").textContent = "";
+              openM("m-bill");
+            }
+
+            /* ===================== ประวัติ ===================== */
+            function loadHist() {
+              call("apiHistory").then(r => { S.hist = r.logs; S.hf.n = 50; renderHistFilters(); renderHist(); $("upd").textContent = "อัปเดต " + nowTxt(); })
+                .catch(e => failBox($("hlist"), e, loadHist));
+            }
+            function renderHistFilters() {
+              const ids = [...new Set(S.hist.map(l => l.id))].sort();
+              $("hid").innerHTML = ("" + "<option value=\"\">ทุกเครื่อง</option>") + ids.map(i => ("" + "<option " + (S.hf.id === i ? "selected" : "") + ">" + (esc(i)) + "</option>")).join("");
+            }
+            function renderHist() {
+              const f = S.hf, q = f.q.trim().toLowerCase();
+              const types = [...new Set(S.hist.map(l => l.type).filter(Boolean))];
+              $("htypes").innerHTML = [["", "ทั้งหมด"]].concat(types.map(t => [t, (TYPE_ICON[t] || "📝") + " " + t])).map(t => ("" + "<button class=\"chip " + (f.type === t[0] ? "on" : "") + "\" data-act=\"htype\" data-v=\"" + (esc(t[0])) + "\">" + (esc(t[1])) + "</button>")).join("");
+              const rows = S.hist.filter(l => (!f.type || l.type === f.type) && (!f.id || l.id === f.id) && (!q || [l.id, l.type, l.detail, l.tech].join(" ").toLowerCase().includes(q)));
+              const sum = rows.reduce((s, l) => s + (l.cost || 0), 0);
+              $("hsum").textContent = rows.length + " รายการ · รวม " + baht(sum) + " บาท";
+              let out = "", cur = "";
+              rows.slice(0, f.n).forEach(l => {
+                if (l.ym !== cur) { cur = l.ym; out += ("" + "<div class=\"mh\">" + (esc(mLabel(l.ym))) + "</div>"); }
+                out += ("" + "<div class=\"card hi\"><div class=\"hi-ic\" aria-hidden=\"true\">" + (TYPE_ICON[l.type] || "📝") + "</div><div class=\"hi-b\"><div><b>" + (esc(l.id)) + "</b> · " + (esc(l.type)) + " <span class=\"mu\">" + (esc(l.date)) + "</span></div>" + (l.detail ? ("" + "<div>" + (esc(l.detail)) + "</div>") : "") + "<div class=\"mu\">" + (l.tech ? "👷 " + esc(l.tech) : "") + (l.tech && l.cost ? " · " : "") + (l.cost ? baht(l.cost) + " บาท" : "") + "</div></div></div>");
+              });
+              if (rows.length > f.n) out += ("" + "<div style=\"text-align:center;margin:10px\"><button data-act=\"more\">แสดงเพิ่ม (เหลืออีก " + (rows.length - f.n) + ")</button></div>");
+              $("hlist").innerHTML = out || ("" + "<div class=\"empty\"><div class=\"big\">🧾</div>ไม่พบรายการ</div>");
+            }
+
+            /* ===================== ตัวจัดการเหตุการณ์ ===================== */
+            document.addEventListener("click", ev => {
+              const el = ev.target.closest("[data-act],[data-close],[data-tab]");
+              if (ev.target.classList && ev.target.classList.contains("ov")) { closeM(ev.target.id); return; }
+              if (!el) return;
+              if (el.dataset.tab) { go(el.dataset.tab); return; }
+              if (el.hasAttribute("data-close")) { closeM(el.closest(".ov").id); return; }
+              const act = el.dataset.act, id = el.dataset.id;
+              const tech = () => S.techs.filter(t => t.id === id)[0];
+              if (act === "zoom") { $("zoom-img").src = el.dataset.src; openM("m-img"); }
+              else if (act === "edit-air") { const air = D.airs.filter(x => x.id === id)[0]; openAir(air); }
+              else if (act === "add-tech") openTech(null);
+              else if (act === "edit") openTech(tech());
+              else if (act === "th") { const h = $("th-" + id); h.hidden = !h.hidden; }
+              else if (act === "fav") { const t = tech(); el.disabled = true;
+                call("apiTechFav", id, !t.fav).then(r => techDone(r, t.fav ? "เลิกเป็นช่างประจำแล้ว" : "ตั้งเป็นช่างประจำแล้ว ⭐")).catch(e => { toast(e.message, true); el.disabled = false; }); }
+              else if (act === "add-bill") openBill(null);
+              else if (act === "edit-bill") openBill(el.dataset.m);
+              else if (act === "pm") { S.pm = el.dataset.v; renderPower(); }
+              else if (act === "bar") { const s = S.power.series[+el.dataset.i];
+                document.querySelectorAll(".cb").forEach(b => b.classList.toggle("sel", b === el));
+                $("cinfo").innerHTML = s.baht == null ? esc(mLabel(s.key)) + " — ไม่มีข้อมูล" : ("" + "<b>" + (esc(mLabel(s.key))) + "</b> · " + (baht(s.baht)) + " บาท" + (s.kwh != null ? " · " + baht(s.kwh) + " kWh" : "")); }
+              else if (act === "cfg") { const b = $("cfgbox"); b.hidden = !b.hidden; }
+              else if (act === "cfg-save") { busy(el, true, "บันทึกสมมติฐาน"); $("cfg-err").textContent = "";
+                call("apiCfgSave", { rate:$("c-rate").value, hours:$("c-hours").value, days:$("c-days").value, eer:$("c-eer").value })
+                  .then(d => { S.power = d; renderPower(); toast("ปรับสมมติฐานแล้ว ✓"); }).catch(e => { $("cfg-err").textContent = e.message; busy(el, false, "บันทึกสมมติฐาน"); }); }
+              else if (act === "htype") { S.hf.type = el.dataset.v; S.hf.n = 50; renderHist(); }
+              else if (act === "more") { S.hf.n += 50; renderHist(); }
+            });
+            document.addEventListener("keydown", ev => { if (ev.key === "Escape") document.querySelectorAll(".ov.on").forEach(o => closeM(o.id)); });
+
+            $("rf").onclick = refreshCurrent;
+            $("addAir").onclick = () => openAir(null);
+            $("addTech").onclick = () => openTech(null);
+            $("addBill").onclick = () => openBill(null);
+            $("askbtn").onclick = ask;
+            $("srch").oninput = () => { if (D) renderHome(); };
+            $("tq").oninput = e => { S.techQ = e.target.value; if (S.techs) renderTech(); };
+            $("hq2").oninput = e => { S.hf.q = e.target.value; S.hf.n = 50; if (S.hist) renderHist(); };
+            $("hid").onchange = e => { S.hf.id = e.target.value; S.hf.n = 50; renderHist(); };
+
+            $("f-air").addEventListener("submit", ev => {
+              ev.preventDefault(); const btn = $("ma-save"); busy(btn, true, "บันทึก"); $("ma-err").textContent = "";
+              call("apiAirSave", { id:$("a-id").value, loc:$("a-loc").value, model:$("a-model").value, btu:$("a-btu").value, status:$("a-status").value })
+                .then(d => { D = d; closeM("m-air"); renderHome(); toast("บันทึกแอร์แล้ว ✓"); })
+                .catch(e => { $("ma-err").textContent = e.message; }).finally(() => busy(btn, false, "บันทึก"));
+            });
+            $("ma-del").onclick = function () {
+              const id = $("a-id").value, b = this;
+              confirm2(b, "🗑 ลบ", () => call("apiAirDelete", id).then(d => { D = d; closeM("m-air"); renderHome(); toast("ลบแอร์แล้ว"); }).catch(e => { $("ma-err").textContent = e.message; }));
+            };
+
+            $("f-tech").addEventListener("submit", ev => {
+              ev.preventDefault(); const btn = $("mt-save"); busy(btn, true, "บันทึก"); $("mt-err").textContent = "";
+              call("apiTechSave", { id:$("t-id").value, name:$("t-name").value, phone:$("t-phone").value, line:$("t-line").value, area:$("t-area").value, price:$("t-price").value, note:$("t-note").value, fav:$("t-fav").checked })
+                .then(r => { closeM("m-tech"); techDone(r, "บันทึกแล้ว ✓"); }).catch(e => { $("mt-err").textContent = e.message; }).finally(() => busy(btn, false, "บันทึก"));
+            });
+            $("mt-del").onclick = function () {
+              const id = $("t-id").value, b = this;
+              confirm2(b, "🗑 ลบ", () => call("apiTechDelete", id).then(r => { closeM("m-tech"); techDone(r, "ลบแล้ว"); }).catch(e => { $("mt-err").textContent = e.message; }));
+            };
+
+            $("f-bill").addEventListener("submit", ev => {
+              ev.preventDefault(); const btn = $("mb-save"); busy(btn, true, "บันทึก"); $("mb-err").textContent = "";
+              call("apiPowerSave", { month:$("b-month").value, baht:$("b-baht").value, kwh:$("b-kwh").value, note:$("b-note").value })
+                .then(d => { S.power = d; closeM("m-bill"); renderPower(); toast(d.saved && d.saved.updated ? "อัปเดตบิลแล้ว ✓" : "บันทึกบิลแล้ว ✓"); })
+                .catch(e => { $("mb-err").textContent = e.message; }).finally(() => busy(btn, false, "บันทึก"));
+            });
+            $("mb-del").onclick = function () {
+              const m = $("b-month").value;
+              confirm2(this, "🗑 ลบ", () => call("apiPowerDelete", m).then(d => { S.power = d; closeM("m-bill"); renderPower(); toast("ลบบิลแล้ว"); }).catch(e => { $("mb-err").textContent = e.message; }));
+            };
+
+            loadHome();
+            setInterval(() => { if (S.tab === "home" && !document.querySelector(".ov.on")) loadHome(); }, 300000);
+    </script>
+  </body>
+</html>
